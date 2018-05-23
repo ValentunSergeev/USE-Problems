@@ -1,47 +1,48 @@
 N = int(input())
 
-nechet = [0] * 7
-chet = [0] * 7
+odd = [0] * 7
+even = [0] * 7
 
 res = 0
 
-def cnt(i, j, k):
+
+def update_result(i, j, k):
     global res
 
     if i == j == k:
-        res += nechet[i] * (nechet[i] - 1) * (nechet[i] - 2) \
-               + nechet[i] * chet[i] * (chet[i] - 1)
+        res += odd[i] * (odd[i] - 1) * (odd[i] - 2) \
+               + odd[i] * even[i] * (even[i] - 1)
     elif i == j:
-        res += nechet[i] * (nechet[i] - 1) * nechet[k]\
-               + chet[i] * (chet[i] - 1) * nechet[k]\
-               + chet[i] * nechet[i] * chet[k]
+        res += odd[i] * (odd[i] - 1) * odd[k] \
+               + even[i] * (even[i] - 1) * odd[k] \
+               + even[i] * odd[i] * even[k]
     elif j == k:
-        res += nechet[j] * (nechet[j] - 1) * nechet[i]\
-               + chet[j] * (chet[j] - 1) * nechet[i]\
-               + chet[j] * nechet[j] * chet[i]
+        res += odd[j] * (odd[j] - 1) * odd[i] \
+               + even[j] * (even[j] - 1) * odd[i] \
+               + even[j] * odd[j] * even[i]
     elif i == k:
-        res += nechet[i] * (nechet[i] - 1) * nechet[j]\
-               + chet[i] * (chet[i] - 1) * nechet[j]\
-               + chet[i] * nechet[i] * chet[j]
+        res += odd[i] * (odd[i] - 1) * odd[j] \
+               + even[i] * (even[i] - 1) * odd[j] \
+               + even[i] * odd[i] * even[j]
     else:
-        res += nechet[i] * nechet[j] * nechet[k]\
-               + chet[i] * chet[j] * nechet[k]\
-               + chet[i] * nechet[j] * chet[k]\
-               + nechet[i] * chet[j] * chet[k]
+        res += odd[i] * odd[j] * odd[k] \
+               + even[i] * even[j] * odd[k] \
+               + even[i] * odd[j] * even[k] \
+               + odd[i] * even[j] * even[k]
 
 
 for i in range(N):
     num = int(input())
     if num % 2 == 0:
-        chet[num % 7] += 1
+        even[num % 7] += 1
     else:
-        nechet[num % 7] += 1
+        odd[num % 7] += 1
 
 for i in range(0, 7):
     for j in range(i, 7):
         for k in range(j, 7):
             if (i + j + k) % 7 == 0:
-                cnt(i, j, k)
+                update_result(i, j, k)
 
 print(res)
 
